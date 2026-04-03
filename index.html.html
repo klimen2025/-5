@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>F5 | Искусственный интеллект & разработка</title>
+    <!-- Google Fonts + Preconnect -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (free CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #05050A;
+            font-family: 'Inter', sans-serif;
+            color: #eef2ff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* кастомный скролл */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0f1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #5b4eff;
+            border-radius: 12px;
+        }
+
+        /* анимации */
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* вращение логотипа */
+        .logo-rotate {
+            transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: inline-block;
+            cursor: pointer;
+        }
+        .logo-rotate.rotate-active {
+            transform: rotate(360deg);
+        }
+
+        .section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* гласс-эффекты */
+        .glass-card {
+            background: rgba(15, 15, 25, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(91, 78, 255, 0.2);
+            border-radius: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(91, 78, 255, 0.6);
+            box-shadow: 0 20px 35px -12px rgba(91, 78, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        /* кнопки */
+        .btn-primary {
+            background: linear-gradient(105deg, #5b4eff, #8f6eff);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 20px rgba(91, 78, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            background: linear-gradient(105deg, #6c5eff, #9f7eff);
+            box-shadow: 0 12px 28px rgba(91, 78, 255, 0.5);
+        }
+
+        .btn-outline-light {
+            background: transparent;
+            border: 1.5px solid rgba(255,255,255,0.3);
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: white;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .btn-outline-light:hover {
+            border-color: #5b4eff;
+            background: rgba(91, 78, 255, 0.1);
+        }
+
+        /* навбар */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5,5,10,0.75);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(91,78,255,0.2);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #b3a6ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            font-weight: 300;
+            color: #5b4eff;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #ddd;
+            font-weight: 500;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .nav-links a:hover {
+            color: #8f6eff;
+        }
+        .mobile-menu {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        /* hero */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(91,78,255,0.25), transparent 70%);
+            top: -150px;
+            right: -150px;
+            z-index: 0;
+            filter: blur(60px);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(91,78,255,0.2);
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+            margin-bottom: 24px;
+            border: 1px solid rgba(91,78,255,0.4);
+        }
+        h1 {
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #fff, #b3a6ff, #5b4eff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 5s ease infinite;
+        }
+
+        /* услуги сетка */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .service-card {
+            padding: 32px 28px;
+            border-radius: 2rem;
+            background: rgba(12, 12, 20, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(91,78,255,0.2);
+            transition: all 0.25s;
+        }
+        .service-icon {
+            font-size: 2.8rem;
+            color: #5b4eff;
+            margin-bottom: 20px;
+        }
+        .service-card h3 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .service-card p {
+            color: #b9c2d9;
+            line-height: 1.5;
+        }
+
+        /* консультация блок */
+        .consult-block {
+            background: linear-gradient(125deg, #0a0a14, #030308);
+            border-radius: 3rem;
+            padding: 60px 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(91,78,255,0.3);
+            box-shadow: 0 25px 40px -12px black;
+        }
+
+        /* метка города */
+        .city-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #10101c;
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-weight: 500;
+            border: 1px solid #2a2a3a;
+        }
+
+        footer {
+            border-top: 1px solid rgba(91,78,255,0.2);
+            padding: 40px 5%;
+            text-align: center;
+            color: #8f95b0;
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+            .mobile-menu {
+                display: block;
+            }
+            .section {
+                padding: 70px 5%;
+            }
+            .consult-block {
+                padding: 40px 24px;
+            }
+        }
+
+        /* модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #0e0e18;
+            border-radius: 2rem;
+            max-width: 500px;
+            width: 90%;
+            padding: 2rem;
+            border: 1px solid #5b4eff;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+        .modal input, .modal textarea {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            background: #1c1c2a;
+            border: 1px solid #2f2f44;
+            border-radius: 28px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+        .modal button {
+            width: 100%;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo logo-rotate" id="rotatingLogo">F5<span>.</span></div>
+    <div class="nav-links" id="navLinks">
+        <a href="#services" class="nav-smooth">Услуги</a>
+        <a href="#consult" class="nav-smooth">Консультация</a>
+        <a href="#contact" class="nav-smooth">Контакты</a>
+        <a href="#" id="openModalBtn" class="btn-outline-light" style="padding: 8px 20px;">Связаться</a>
+    </div>
+    <div class="mobile-menu" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero section">
+    <div class="hero-glow"></div>
+    <div class="container hero-content">
+        <div class="badge"><i class="fas fa-microchip"></i> Искусственный интеллект нового поколения</div>
+        <h1>Перезагружаем <span class="gradient-text">бизнес</span> 
+ с помощью AI</h1>
+        <p style="font-size: 1.2rem; max-width: 600px; margin: 24px 0; color: #bfc8e6;">Внедрение ИИ, консалтинг, разработка сайтов, приложений и реконструкция legacy-проектов. Санкт-Петербург — глобально.</p>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <button class="btn-primary modal-trigger" data-modal="open"><i class="fas fa-rocket"></i> Запустить проект</button>
+            <button class="btn-outline-light modal-trigger" data-modal="open"><i class="fas fa-calendar-alt"></i> Бесплатная консультация</button>
+        </div>
+        <div style="margin-top: 48px;">
+            <div class="city-tag"><i class="fas fa-map-marker-alt" style="color:#5b4eff"></i> Санкт-Петербург | Работаем онлайн</div>
+        </div>
+    </div>
+</section>
+
+<!-- Услуги -->
+<section id="services" class="section">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <span class="badge"><i class="fas fa-cogs"></i> Экспертиза F5</span>
+            <h2 style="font-size: 2.5rem; margin-top: 16px;">Что мы предлагаем</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-brain"></i></div>
+                <h3>AI-интеграция</h3>
+                <p>Внедрение искусственного интеллекта в бизнес-процессы: чат-боты, аналитика, LLM, компьютерное зрение.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Консалтинг онлайн‑бизнеса</h3>
+                <p>Аудит, стратегия цифровой трансформации, оптимизация маржи с помощью AI-инструментов.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-code"></i></div>
+                <h3>Разработка сайтов</h3>
+                <p>Современные веб-платформы (React, Vue, T3) с максимальной производительностью и дизайном.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Мобильные приложения</h3>
+                <p>iOS, Android, кроссплатформа — создаем удобные и масштабируемые продукты.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-sync-alt"></i></div>
+                <h3>Реконструкция сайтов</h3>
+                <p>Обновляем устаревшие проекты: рефакторинг, современный UX, скорость и SEO.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>AI-безопасность</h3>
+                <p>Защита данных и внедрение интеллектуальных систем мониторинга угроз.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Консультация + город -->
+<section id="consult" class="section">
+    <div class="container consult-block">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+            <div>
+                <span class="badge"><i class="fas fa-headset"></i> Стратегия 360°</span>
+                <h2 style="font-size: 2rem; margin: 16px 0;">Проконсультируем по AI и цифровым продуктам</h2>
+                <p style="max-width: 550px; color: #b9c2d9;">Оставьте заявку — мы обсудим, как искусственный интеллект и современная разработка выведут ваш бизнес на новый уровень. Офис в Санкт-Петербурге, работаем по всему миру.</p>
+                <button class="btn-primary modal-trigger" data-modal="open" style="margin-top: 28px;"><i class="fas fa-paper-plane"></i> Получить консультацию</button>
+            </div>
+            <div style="margin-top: 20px;">
+                <div class="city-tag" style="background: #1b1b2c;"><i class="fas fa-building"></i> Санкт-Петербург, ул. Ленсовета 2БЦ</div>
+                <div class="city-tag" style="margin-top: 12px; background: #1b1b2c;"><i class="fab fa-telegram"></i> @f5_ai_consult</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Блок кейсов / преимущества -->
+<section class="section">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 50px;">
+            <span class="badge"><i class="fas fa-chart-simple"></i> Цифры и факты</span>
+            <h2 style="font-size: 2rem;">Почему F5?</h2>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+            <div class="glass-card" style="padding: 30px; width: 250px; text-align: center;">
+                <i class="fas fa-robot" style="font-size: 3rem; color: #8f6eff;"></i>
+                <h3 style="margin: 16px 0;">98%</h3>
+                <p>точности AI-моделей в бизнес-задачах</p>
+            </div>
+            <div class="glass-card" style="padding: 30px; width: 250px; text-align: center;">
+                <i class="fas fa-globe" style="font-size: 3rem; color: #8f6eff;"></i>
+                <h3 style="margin: 16px 0;">150+</h3>
+                <p>реализованных проектов за 4 года</p>
+            </div>
+            <div class="glass-card" style="padding: 30px; width: 250px; text-align: center;">
+                <i class="fas fa-clock" style="font-size: 3rem; color: #8f6eff;"></i>
+                <h3 style="margin: 16px 0;">24/7</h3>
+                <p>поддержка и AI-мониторинг</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Контакты -->
+<footer id="contact">
+    <div class="container" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; text-align: left;">
+        <div>
+            <div class="logo" style="font-size: 2rem;">F5<span>.</span></div>
+            <p style="margin-top: 16px; max-width: 260px;">Интеграция ИИ, разработка и консалтинг для ambitious бизнеса</p>
+        </div>
+        <div>
+            <h4>Контакты</h4>
+            <p><i class="fab fa-telegram"></i> @f5_ai_consult</p>
+            <p><i class="fas fa-envelope"></i> hello@f5.ai</p>
+        </div>
+        <div>
+            <h4>Навигация</h4>
+            <p><a href="#services" class="footer-link nav-smooth" style="color:#b3a6ff; text-decoration: none;">Услуги</a></p>
+            <p><a href="#consult" class="footer-link nav-smooth" style="color:#b3a6ff; text-decoration: none;">Консультация</a></p>
+        </div>
+    </div>
+    <div style="margin-top: 40px;">© 2025 F5 — Искусственный интеллект, разработка сайтов, консалтинг в Санкт-Петербурге</div>
+</footer>
+
+<!-- Модальное окно -->
+<div id="callbackModal" class="modal">
+    <div class="modal-content">
+        <div class="close-modal" id="closeModalBtn">&times;</div>
+        <h3 style="margin-bottom: 20px;"><i class="fas fa-headset"></i> Оставьте заявку</h3>
+        <form id="modalForm">
+            <input type="text" placeholder="Ваше имя" required id="modalName">
+            <input type="tel" placeholder="Телефон или Telegram" required id="modalContact">
+            <textarea rows="3" placeholder="Краткое описание задачи..." id="modalTask"></textarea>
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;"><i class="fas fa-paper-plane"></i> Отправить</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // ========== 1. КРУТЯЩИЙСЯ ЛОГОТИП ==========
+    const logoElement = document.getElementById('rotatingLogo');
+    if (logoElement) {
+        logoElement.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.remove('rotate-active');
+            // форсируем reflow чтобы анимация воспроизводилась заново
+            void this.offsetWidth;
+            this.classList.add('rotate-active');
+            // удалим класс после завершения анимации, чтобы при следующем клике сработало
+            setTimeout(() => {
+                this.classList.remove('rotate-active');
+            }, 600);
+        });
+    }
+
+    // ========== 2. МОДАЛЬНОЕ ОКНО (работа всех кнопок) ==========
+    const modal = document.getElementById('callbackModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    
+    // Функции модалки
+    function openModal() {
+        if (modal) modal.style.display = 'flex';
+    }
+    function closeModal() {
+        if (modal) modal.style.display = 'none';
+    }
+
+    // Все элементы, которые должны открывать модалку
+    const modalTriggers = document.querySelectorAll('.modal-trigger, #openModalBtn, #heroCtaBtn, #consultCtaBtn, #consultFormBtn');
+    modalTriggers.forEach(btn => {
+        if (btn) {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal();
+            });
+        }
+    });
+    
+    // Кнопка "Связаться" в навбаре (уже есть #openModalBtn, но на всякий случай дублируем)
+    const navConnectBtn = document.querySelector('#openModalBtn');
+    if (navConnectBtn) {
+        navConnectBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+    }
+    
+    // Закрытие по крестику
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeModal);
+    }
+    
+    // Закрытие при клике вне модального окна
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // Обработка отправки формы (имитация)
+    const modalForm = document.getElementById('modalForm');
+    if (modalForm) {
+        modalForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Спасибо! Наш менеджер свяжется с вами в ближайшее время.');
+            modalForm.reset();
+            closeModal();
+        });
+    }
+
+    // ========== 3. ПЛАВНАЯ ПРОКРУТКА (для ссылок внутри страницы) ==========
+    const smoothScrollLinks = document.querySelectorAll('.nav-smooth, .footer-link[href^="#"]');
+    smoothScrollLinks.forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId && targetId !== '#') {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                    // Если мобильное меню открыто — закрываем его
+                    const navContainer = document.getElementById('navLinks');
+                    if (window.innerWidth <= 900 && navContainer && navContainer.style.display === 'flex') {
+                        navContainer.style.display = 'none';
+                    }
+                }
+            }
+        });
+    });
+    
+    // ========== 4. МОБИЛЬНОЕ МЕНЮ (бургер) ==========
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const navLinksContainer = document.getElementById('navLinks');
+    if (mobileBtn && navLinksContainer) {
+        mobileBtn.addEventListener('click', () => {
+            if (navLinksContainer.style.display === 'flex') {
+                navLinksContainer.style.display = 'none';
+            } else {
+                navLinksContainer.style.display = 'flex';
+                navLinksContainer.style.flexDirection = 'column';
+                navLinksContainer.style.position = 'absolute';
+                navLinksContainer.style.top = '80px';
+                navLinksContainer.style.left = '20px';
+                navLinksContainer.style.right = '20px';
+                navLinksContainer.style.backgroundColor = '#0a0a12';
+                navLinksContainer.style.padding = '24px';
+                navLinksContainer.style.borderRadius = '28px';
+                navLinksContainer.style.border = '1px solid #2a2a44';
+                navLinksContainer.style.gap = '20px';
+                navLinksContainer.style.zIndex = '99';
+                navLinksContainer.style.backdropFilter = 'blur(16px)';
+            }
+        });
+    }
+
+    // ========== 5. ДОПОЛНИТЕЛЬНО: починка кнопок в герое, если вдруг не сработало (дублируем явно) ==========
+    const heroBtn1 = document.getElementById('heroCtaBtn');
+    if (heroBtn1) {
+        heroBtn1.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+    }
+    const consultCta = document.getElementById('consultCtaBtn');
+    if (consultCta) {
+        consultCta.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+    }
+    const consultFormBtnBlock = document.getElementById('consultFormBtn');
+    if (consultFormBtnBlock) {
+        consultFormBtnBlock.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+    }
+    
+    // (опционально) скрыть навлинки при ресайзе, чтобы не было конфликта
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900 && navLinksContainer) {
+            navLinksContainer.style.display = '';
+            navLinksContainer.style.position = '';
+            navLinksContainer.style.top = '';
+            navLinksContainer.style.left = '';
+            navLinksContainer.style.right = '';
+            navLinksContainer.style.backgroundColor = '';
+            navLinksContainer.style.padding = '';
+            navLinksContainer.style.borderRadius = '';
+            navLinksContainer.style.border = '';
+            navLinksContainer.style.gap = '';
+            navLinksContainer.style.zIndex = '';
+            navLinksContainer.style.backdropFilter = '';
+        }
+    });
+    // ========== ДОБАВЬТЕ ЭТОТ КОД ==========
+// ⚡ ВСТАВЬТЕ СЮДА ВАШ URL ИЗ GOOGLE APPS SCRIPT
+const GOOGLE_SHEET_API = 'https://script.google.com/macros/s/AKfycbyRrY_MjBNy4qgeME1aORqyS4MVZkePWH7EwRcnzBM9jLOgiTcO4bW_QmLZzM3GYC0/exec';
+
+// Заменяем обработчик отправки формы на отправку в Google Sheets
+const formForSheet = document.getElementById('modalForm');
+if (formForSheet) {
+    // Удаляем старый обработчик (alert)
+    const oldSubmit = formForSheet.onsubmit;
+    
+    // Добавляем новый
+    formForSheet.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = this.querySelector('button');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Отправка...';
+        
+        const formData = {
+            name: document.getElementById('modalName')?.value || '',
+            contact: document.getElementById('modalContact')?.value || '',
+            task: document.getElementById('modalTask')?.value || '',
+            timestamp: new Date().toISOString(),
+            page: window.location.href
+        };
+        
+        try {
+            await fetch(GOOGLE_SHEET_API, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            
+            alert('✅ Спасибо! Мы свяжемся с вами в ближайшее время');
+            formForSheet.reset();
+            closeModal();
+            
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('❌ Ошибка отправки. Попробуйте позже или напишите в Telegram: @f5_support');
+            
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    });
+}
+</script>
+</body>
+</html>

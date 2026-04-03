@@ -1,0 +1,334 @@
+﻿/* ========== RESET ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #05050A;
+    font-family: 'Inter', sans-serif;
+    color: #eef2ff;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* кастомный скролл (исправлено — без лишних символов) */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #0f0f1a;
+}
+::-webkit-scrollbar-thumb {
+    background: #5b4eff;
+    border-radius: 12px;
+}
+
+/* анимации */
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* вращение логотипа */
+.logo-rotate {
+    transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    display: inline-block;
+    cursor: pointer;
+}
+.logo-rotate.rotate-active {
+    transform: rotate(360deg);
+}
+
+/* секции */
+.section {
+    padding: 100px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* гласс-эффекты */
+.glass-card {
+    background: rgba(15, 15, 25, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(91, 78, 255, 0.2);
+    border-radius: 2rem;
+    transition: all 0.3s ease;
+}
+.glass-card:hover {
+    border-color: rgba(91, 78, 255, 0.6);
+    box-shadow: 0 20px 35px -12px rgba(91, 78, 255, 0.15);
+    transform: translateY(-5px);
+}
+
+/* кнопки */
+.btn-primary {
+    background: linear-gradient(105deg, #5b4eff, #8f6eff);
+    border: none;
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 20px rgba(91, 78, 255, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+.btn-primary:hover {
+    transform: scale(1.02);
+    background: linear-gradient(105deg, #6c5eff, #9f7eff);
+    box-shadow: 0 12px 28px rgba(91, 78, 255, 0.5);
+}
+
+.btn-outline-light {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    padding: 12px 28px;
+    border-radius: 40px;
+    font-weight: 500;
+    color: white;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+.btn-outline-light:hover {
+    border-color: #5b4eff;
+    background: rgba(91, 78, 255, 0.1);
+}
+
+/* навбар */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5,5,10,0.75);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(91,78,255,0.2);
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #FFFFFF, #b3a6ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -1px;
+}
+.logo span {
+    font-weight: 300;
+    color: #5b4eff;
+}
+
+.nav-links {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+.nav-links a {
+    text-decoration: none;
+    color: #ddd;
+    font-weight: 500;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.nav-links a:hover {
+    color: #8f6eff;
+}
+.mobile-menu {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+/* hero */
+.hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(91,78,255,0.25), transparent 70%);
+    top: -150px;
+    right: -150px;
+    z-index: 0;
+    filter: blur(60px);
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+.badge {
+    display: inline-block;
+    background: rgba(91,78,255,0.2);
+    border-radius: 40px;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+    margin-bottom: 24px;
+    border: 1px solid rgba(91,78,255,0.4);
+}
+h1 {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+.gradient-text {
+    background: linear-gradient(135deg, #fff, #b3a6ff, #5b4eff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientShift 5s ease infinite;
+}
+
+/* услуги сетка */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+.service-card {
+    padding: 32px 28px;
+    border-radius: 2rem;
+    background: rgba(12, 12, 20, 0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(91,78,255,0.2);
+    transition: all 0.25s;
+}
+.service-icon {
+    font-size: 2.8rem;
+    color: #5b4eff;
+    margin-bottom: 20px;
+}
+.service-card h3 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+.service-card p {
+    color: #b9c2d9;
+    line-height: 1.5;
+}
+
+/* консультация блок */
+.consult-block {
+    background: linear-gradient(125deg, #0a0a14, #030308);
+    border-radius: 3rem;
+    padding: 60px 40px;
+    margin: 40px 0;
+    border: 1px solid rgba(91,78,255,0.3);
+    box-shadow: 0 25px 40px -12px black;
+}
+
+/* метка города */
+.city-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #10101c;
+    padding: 10px 20px;
+    border-radius: 60px;
+    font-weight: 500;
+    border: 1px solid #2a2a3a;
+}
+
+footer {
+    border-top: 1px solid rgba(91,78,255,0.2);
+    padding: 40px 5%;
+    text-align: center;
+    color: #8f95b0;
+}
+
+/* мобильная версия */
+@media (max-width: 900px) {
+    .nav-links {
+        display: none;
+    }
+    .mobile-menu {
+        display: block;
+    }
+    .section {
+        padding: 70px 5%;
+    }
+    .consult-block {
+        padding: 40px 24px;
+    }
+}
+
+/* модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background: #0e0e18;
+    border-radius: 2rem;
+    max-width: 500px;
+    width: 90%;
+    padding: 2rem;
+    border: 1px solid #5b4eff;
+    position: relative;
+}
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+.modal input, .modal textarea {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    background: #1c1c2a;
+    border: 1px solid #2f2f44;
+    border-radius: 28px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+.modal button {
+    width: 100%;
+    margin-top: 12px;
+}
